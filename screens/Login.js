@@ -18,7 +18,7 @@ class Login extends React.Component{
     const {usuario} = this.state;
     const {pass} = this.state;
 
-    fetch('http://localhost', {
+    fetch('http://localhost/ingelecsa/index.php', {
       method: ' POST',
       body:JSON.stringify({
         usuario: this.state.usuario,
