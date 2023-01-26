@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Keyboard } from 'react-native'
 import {TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Boton from "../components/Boton";
@@ -9,36 +9,42 @@ class Login extends React.Component{
   constructor(props){
     super(props)
     this.state={
-      usuario: '',
-      pass: ''
+      correo: '',
+      empleado_passw: ''
     }
   }
-  /*
+  
   Logear=()=>{
-    const {usuario} = this.state;
-    const {pass} = this.state;
+    const {correo} = this.state;
+    const {empleado_passw} = this.state;
+    console.log(correo);
+    console.log(empleado_passw);
+    Keyboard.dismiss();
 
-    fetch('http://localhost/ingelecsa/index.php', {
-      method: ' POST',
+    fetch("http://192.168.100.40/ingelecsa/login/index.php", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
       body:JSON.stringify({
-        usuario: this.state.usuario,
-        pass: this.state.pass
-      })
-    }).then((respuesta)=>respuesta.json())
-    .catch(error=> console.error('Error', error))
-    .then(response => {
-      if(response.loggedin == 1){
-        this.props.navigation.navigate('Home');   
-        
-
-    }else{
-        Alert.alert(response.msj);
-    }
+        correo: correo,
+        empleado_passw: empleado_passw,
+      }),
     })
+    .then((response)=>response.json())
+    .then((responseJson)=>{
+      alert(responseJson);
+      if(responseJson == "ok") {
+        this.props.navigation.navigate("Home");
+      }
+    })
+    .catch((error)=>{
+      console.error("ERROR ENCONTRADO " + error);
+  })
+};
 
-  }
-
-  */
+  
   render(){
 
     return(
@@ -52,21 +58,21 @@ class Login extends React.Component{
       <Text style={styles.descripcion}>INICIA SESIÓN PARA CONTINUAR</Text>
       <TextInput
         placeholder="email@ingelecsa.cl"
-        onChangeText={(usuario) => this.setState({usuario})}
+        onChangeText={(correo) => this.setState({correo})}
         style={styles.textInput}
       />
       <TextInput
       placeholder="clave"
-      onChangeText={(pass) => this.setState({pass})}
+      onChangeText={(empleado_passw) => this.setState({empleado_passw})}
       secureTextEntry={true}
       style={styles.textInput}
       />
       <Boton
       text = "Lets Go"
-      onPress = { /*this.Logear*/() =>{
+      onPress = { this.Logear /*() =>{
         this.props.navigation.navigate('Home')
       }
-        
+        */
       }/>
       <StatusBar style="auto" />
       
@@ -75,33 +81,6 @@ class Login extends React.Component{
   }
 }export default Login;
 
-/*
-const Login = ({navigation}) => {
-    return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Login</Text>
-      <Text style={styles.sub_Titulo}>INICIA SESIÓN PARA CONTINUAR</Text>
-      <Text style={styles.descripcion}>INICIA SESIÓN PARA CONTINUAR</Text>
-      <TextInput
-        placeholder="email@ingelecsa.cl"
-        style={styles.textInput}
-      />
-      <TextInput
-        placeholder="clave"
-        style={styles.textInput}
-      />
-      <Boton
-      text = "Lets Go"
-      onPress = { () => {
-        navigation.navigate('Home')
-      }}
-      />
-      <StatusBar style="auto" />
-      
-    </View>
-  );
-}
-export default Login;*/
 
 const styles = StyleSheet.create({
     container: {
