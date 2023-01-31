@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image, Keyboard } from 'react-native'
 import {TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Boton from "../components/Boton";
-import { NavigationContainerRefContext } from "@react-navigation/native";
+import {AsyncStorage} from 'react-native';
+import axios from 'axios'
 
 class Login extends React.Component{
   constructor(props){
@@ -14,13 +15,36 @@ class Login extends React.Component{
     }
   }
   
-  Logear=()=>{
+  Logear= async ()=>{
+    
     const {correo} = this.state;
     const {empleado_passw} = this.state;
-    console.log(correo);
-    console.log(empleado_passw);
+    var enviarData = {correo:correo, empleado_passw:empleado_passw};
     Keyboard.dismiss();
 
+    axios.post('http://192.168.100.40/ingelecsa/login/index.php', enviarData)
+    .then(async (resultado)=>{
+      if (resultado.data.Status === '200'){
+        console.log(resultado);
+
+        try {
+          await AsyncStorage.setItem('rut', resultado.data.rut);
+          await AsyncStorage.setItem('Nombre', resultado.data.Nombre);
+          await AsyncStorage.setItem('Correo', resultado.data.Correo);
+          await AsyncStorage.setItem('Cargo', resultado.data.Cargo);
+        }catch(error) {
+          console.log(error);
+        }
+        this.props.navigation.navigate("Home");
+        
+      }
+    else {
+      alert('Invalid User');
+    }
+    })
+
+
+/*
     fetch("http://192.168.100.40/ingelecsa/login/index.php", {
       method: 'POST',
       headers: {
@@ -42,9 +66,10 @@ class Login extends React.Component{
     .catch((error)=>{
       console.error("ERROR ENCONTRADO " + error);
   })
+
+*/
 };
 
-  
   render(){
 
     return(

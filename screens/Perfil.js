@@ -40,11 +40,54 @@ const styles = StyleSheet.create({
 export default Flex;
 */
 
-import React, {useState} from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, TouchableOpacity, Text, StyleSheet, AsyncStorage} from 'react-native';
+import Boton from '../components/Boton';
 
-const AlignItemsLayout = () => {
+const AlignItemsLayout = ({navigation}) => {
   const [alignItems, setAlignItems] = useState('stretch');
+  const [nombre, setName] = useState();
+  const [rut, setRut] = useState();
+  const [correo, setCorreo] = useState();
+  const [cargo, setCargo] = useState();
+
+
+  const load = async () =>{
+    try{
+      let nombre = await AsyncStorage.getItem('Nombre');
+      let rut = await AsyncStorage.getItem('rut');
+      let correo = await AsyncStorage.getItem('Correo');
+      let cargo = await AsyncStorage.getItem('Cargo');
+      if (nombre != null && rut != null && correo != null && cargo != null){
+        setName(nombre);
+        setRut(rut);
+        setCorreo(correo);
+        setCargo(cargo);
+
+      }
+    } catch(error){
+      alert(error)
+    }
+  }
+
+  const Logaout = async () => {
+    try {
+      await AsyncStorage.clear();
+      navigation.navigate("Login");
+  
+    } catch(error) {
+      alert(error);
+    } finally{
+      setName("");
+      setRut("");
+      setCorreo("");
+      setCargo("");
+    }
+  }
+
+  useEffect(() => {
+    load()
+  }, [])
 
   return (
     <PreviewLayout
@@ -64,7 +107,23 @@ const AlignItemsLayout = () => {
           },
         ]}
       />
+      <Text>
+        {nombre}
+      </Text>
+      <Text>
+        {rut}
+      </Text>
+      <Text>
+        {correo}
+      </Text>
+      <Text>
+        {cargo}
+      </Text>
+      <Boton
+      text = "Salir"
+      onPress = {() => Logaout()}></Boton>
     </PreviewLayout>
+    
   );
 };
 

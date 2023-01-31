@@ -19,9 +19,27 @@ $rs= mysqli_fetch_array($resultado);
 
 
 
+if($nums==1){
+    http_response_code(200);
+    $outp = "";
+    
+    $outp .= '{"rut":"'  .$rs["rut"]. '",';
+    $outp .= '"Nombre":"'    .$rs["nombre"].'",';
+    $outp .= '"Correo":"'    .$rs["correo"].'",';
+    $outp .= '"Cargo":"'    .$rs["cargo"].'",';
+    $outp .= '"Status":"200"}';
+
+    echo $outp;
+    
+
+}
+
+else{
+    http_response_code(202);
+}
 
 
-
+/*
 if($nums==1){
     echo json_encode('ok');
     exit();
@@ -31,5 +49,5 @@ if($nums==1){
     echo json_encode("Hubo un error");
     exit();
 };
-
+*/
 ?>
