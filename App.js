@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import MainStack from './navigation/MainStack';
+import "react-native-gesture-handler";
+
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { useLoadedAssets } from "./hooks/useLoadedAssets";
+import Navigation from "./navigation";
+import { useColorScheme } from "react-native";
 
 export default function App() {
-  return (
-    <SafeAreaView style={{flex: 1}}>
-      <MainStack/>
-    </SafeAreaView>
-  );
-}
+  const isLoadingComplete = useLoadedAssets();
+  const colorScheme = useColorScheme();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <SafeAreaProvider>
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar />
+      </SafeAreaProvider>
+    );
+  }
+}

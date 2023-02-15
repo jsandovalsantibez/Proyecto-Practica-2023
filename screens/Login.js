@@ -94,10 +94,9 @@ class Login extends React.Component{
       />
       <Boton
       text = "Lets Go"
-      onPress = { this.Logear /*() =>{
+      onPress = { /*this.Logear */() =>{
         this.props.navigation.navigate('Home')
       }
-        */
       }/>
       <StatusBar style="auto" />
       
