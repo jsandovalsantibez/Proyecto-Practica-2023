@@ -25,12 +25,15 @@ class DocGeneration extends React.Component{
             recomendacion: '',
             ubicacion_problema: '',
 
+            api: "192.168.100.40" //Depende de tu direccion IPv4
+
         }
 }
 
 componentDidMount() {
 
-    fetch('http://172.22.192.1/ingelecsa/tienda/')//Depende de tu direccion IPv4
+    const {api} = this.state;
+    fetch('http://'+api+'/ingelecsa/tienda/')
     .then(respuesta=>respuesta.json())
     .then((datosRespuesta)=>{
         this.setState({ nombre_tiendas: datosRespuesta})
@@ -46,6 +49,8 @@ render(){
     enviarDatos = ()=> {
         Keyboard.dismiss();
 
+        const {api} = this.state;
+
         const{seleccion_tienda, ubicacion, jefe_zonal, tipo_mant,
         fecha_inicio, fecha_termino, criticidad, principal_problema,
         origen, recomendacion, ubicacion_problema} = this.state;
@@ -59,7 +64,7 @@ render(){
         origen:origen, recomendacion:recomendacion, 
         ubicacion_problema:ubicacion_problema};
             
-        fetch("http://172.22.192.1/ingelecsa/informes/?insertar=1",{
+        fetch('http://'+api+'/ingelecsa/informes/?insertar=1',{
             method:"POST",
             body:JSON.stringify(datosEnviar)
         }).then(respuesta=>respuesta.json())
@@ -188,7 +193,7 @@ render(){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: Platform.OS === "android" ? 20:0,
+      marginTop: Platform.OS === "android" ? 35:0,
     },
     body: {
         justifyContent: "center",

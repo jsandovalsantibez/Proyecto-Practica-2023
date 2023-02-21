@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, ScrollView, Text} from 'react-native';
+import {Image, SafeAreaView, ScrollView, Text, StyleSheet} from 'react-native';
 
 const logo1 = {
   uri: 'https://th.bing.com/th/id/OIP.cY-hB6Vqubk0V2OfA2qfQQHaEK?pid=ImgDet&rs=1',
@@ -28,6 +28,7 @@ const logo5 = {
 };
 
 const App = () => (
+  <SafeAreaView style={styles.container}>
   <ScrollView style={{backgroundColor: '#2A3855'}}>
     <Text style={{fontSize: 40}}>     Sobre ingelecsa</Text>
     <Image source={logo1} />
@@ -42,6 +43,13 @@ const App = () => (
     <Image style={{width: 500, height: 250}} source={require('../images/homecenter.png')} />
 
   </ScrollView>
+  </SafeAreaView>
 );
-
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: Platform.OS === "android" ? 35:0,
+    },
+})
