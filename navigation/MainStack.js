@@ -5,6 +5,11 @@ import { NavigationContainer } from '@react-navigation/native'
 import Home from '../screens/Home'
 import Perfil from "../screens/Perfil";
 import Login from "../screens/Login";
+import Mantencion from "../screens/Mantencion";
+import Dispositivos from "../screens/Dispositivos";
+import DISextincion from "../screens/DISextincion";
+import Audio from "../screens/Audio";
+
 
 const Stack = createNativeStackNavigator()
 //Navigation Container es el padre
@@ -25,6 +30,21 @@ const MainStack = () => {
                 name= 'Perfil'
                 component = { Perfil }
                 />
+                <Stack.Screen
+                name= 'Mantencion'
+                component={ Mantencion }/>
+
+                <Stack.Screen
+                name= 'Dispositivos'
+                component={ Dispositivos }/>
+
+                <Stack.Screen
+                name= 'DISextincion'
+                component={ DISextincion }/>
+
+                <Stack.Screen
+                name= 'Audio'
+                component={ Audio }/>
             </Stack.Navigator>
         </NavigationContainer>
     )

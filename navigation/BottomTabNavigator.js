@@ -11,6 +11,7 @@ import TabTwoScreen from "../screens/TabTwoScreen";
 import Home from "../screens/Home";
 import Perfil from '../screens/Perfil'
 import DocGeneration from "../screens/DocGeneration";
+import Mantencion from "../screens/Mantencion";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -38,6 +39,16 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Informes"
         component={DocGeneration}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="add-circle" size={40} color={'#BC4B09'} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Mantencion"
+        component={Mantencion}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (

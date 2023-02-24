@@ -1,7 +1,7 @@
 <?php
 
 // Conecta a la base de datos  con usuario, contraseña y nombre de la BD
-$servidor = "localhost"; $usuario = "root"; $contrasenia = "@@Macc22"; $nombreBaseDatos = "ingelecsa";
+$servidor = "localhost"; $usuario = "root"; $contrasenia = "Ingelecsa2023@@"; $nombreBaseDatos = "ingelecsa";
 $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 $data = json_decode(file_get_contents("php://input"));
